@@ -9,6 +9,7 @@ import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { getUser } from "@/lib/actions/auth";
 import { getWishlist } from "@/lib/actions/wishlist";
 import PWARegister from "@/components/ui/PWARegister";
+import PWAInstallBanner from "@/components/ui/PWAInstallBanner";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -28,7 +29,11 @@ export const metadata: Metadata = {
   description:
     "Not clothing. Armor. Each piece carries a story, a philosophy, a mission. Enter a different empire.",
   manifest: "/manifest.json",
-  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "TYLON" },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "TYLON",
+  },
 };
 
 export default async function RootLayout({
@@ -45,9 +50,12 @@ export default async function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#0D0D0B" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
       </head>
       <body className="font-sans bg-tylon-bg text-tylon-primary">
         <CartProvider>
@@ -59,6 +67,7 @@ export default async function RootLayout({
             {children}
             <CartSidebar />
             <WhatsAppButton />
+            <PWAInstallBanner />
             <Toaster
               position="bottom-center"
               toastOptions={{
