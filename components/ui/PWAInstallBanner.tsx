@@ -62,7 +62,7 @@ export default function PWAInstallBanner() {
                      bg-[#1A1A18] border border-[#2a2a28] shadow-2xl flex items-center gap-4 p-4"
         >
           {/* icon */}
-          <div className="w-10 h-10 bg-[#C9A84C]/10 border border-[#C9A84C]/30 flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 bg-[#4A5C3A]/10 border border-[#4A5C3A]/30 flex items-center justify-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/icons/icon-72x72.png"
@@ -87,7 +87,7 @@ export default function PWAInstallBanner() {
               onClick={handleInstall}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center gap-1.5 bg-[#C9A84C] text-[#1A1A18] font-dm text-[10px]
+              className="flex items-center gap-1.5 bg-[#4A5C3A] text-[#F0EDE6] font-dm text-[10px]
                          tracking-wider uppercase px-3 py-2 cursor-pointer"
             >
               <Download size={11} /> Install
