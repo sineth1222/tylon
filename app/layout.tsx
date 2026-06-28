@@ -10,6 +10,7 @@ import { getUser } from "@/lib/actions/auth";
 import { getWishlist } from "@/lib/actions/wishlist";
 import PWARegister from "@/components/ui/PWARegister";
 import PWAInstallBanner from "@/components/ui/PWAInstallBanner";
+import MusicPlayer from "@/components/ui/MusicPlayer";
 
 const oswald = Oswald({
   subsets: ["latin"],
@@ -68,6 +69,7 @@ export default async function RootLayout({
             <CartSidebar />
             <WhatsAppButton />
             <PWAInstallBanner />
+            <MusicPlayer />
             <Toaster
               position="bottom-center"
               toastOptions={{
