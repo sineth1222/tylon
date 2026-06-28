@@ -4,35 +4,38 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Volume2, VolumeX } from "lucide-react";
 import { weddingConfig } from "@/lib/weddingConfig";
-//import { weddingConfig } from "@/lib/weddingConfig";
 
 export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [started, setStarted] = useState(false);
 
-  // Try to start music once the guest scrolls past the hero section.
-  // Browsers block unprompted autoplay, so this only fires after a
-  // user gesture (scroll counts in most browsers once combined with
-  // play() inside the resulting event — if it's still blocked, the
-  // floating button lets guests start it with one tap instead).
   useEffect(() => {
-    const handleScroll = () => {
-      if (hasStarted) return;
-      if (window.scrollY > window.innerHeight * 0.6) {
-        setHasStarted(true);
-        audioRef.current
-          ?.play()
-          .then(() => setIsPlaying(true))
-          .catch(() => {
-            // Autoplay blocked — guest can tap the floating button.
-            setIsPlaying(false);
-          });
-      }
+    const startOnInteraction = () => {
+      if (started) return;
+      const audio = audioRef.current;
+      if (!audio) return;
+
+      audio
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          setStarted(true);
+        })
+        .catch(() => setIsPlaying(false));
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [hasStarted]);
+
+    // ඕනෑම interaction එකෙන් — click, touch, key
+    window.addEventListener("click", startOnInteraction, { once: true });
+    window.addEventListener("touchstart", startOnInteraction, { once: true });
+    window.addEventListener("keydown", startOnInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener("click", startOnInteraction);
+      window.removeEventListener("touchstart", startOnInteraction);
+      window.removeEventListener("keydown", startOnInteraction);
+    };
+  }, [started]);
 
   const toggle = () => {
     if (!audioRef.current) return;
@@ -44,13 +47,12 @@ export default function MusicPlayer() {
         .play()
         .then(() => setIsPlaying(true))
         .catch(() => setIsPlaying(false));
-      setHasStarted(true);
     }
   };
 
   return (
     <>
-      <audio ref={audioRef} src={weddingConfig.musicSrc} loop preload="none" />
+      <audio ref={audioRef} src={weddingConfig.musicSrc} loop preload="auto" />
 
       <motion.button
         type="button"
@@ -60,7 +62,7 @@ export default function MusicPlayer() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.5, duration: 0.5 }}
         whileTap={{ scale: 0.92 }}
-        className="fixed bottom-6 left-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-black/10  "
+        className="fixed bottom-6 left-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-tylon-card border border-tylon-border backdrop-blur"
       >
         <AnimatePresence mode="wait" initial={false}>
           {isPlaying ? (
