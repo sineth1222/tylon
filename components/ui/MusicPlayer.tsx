@@ -93,7 +93,7 @@ export default function MusicPlayer() {
               exit={{ opacity: 0, rotate: 90 }}
               transition={{ duration: 0.25 }}
             >
-              <VolumeX className="h-5 w-5 text-ink-400" />
+              <VolumeX className="h-5 w-5 text-white/60" />
             </motion.span>
           )}
         </AnimatePresence>
